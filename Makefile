@@ -6,8 +6,8 @@ SHELL = /bin/sh
 SUBDIRS = hyp plain dragdrop bubble
 
 srcdir = .
-top_srcdir = ..
-subdir = hypview
+top_srcdir = .
+subdir = .
 
 installdir = /opt/GEM/hypview
 cpu = all

@@ -6,7 +6,7 @@ SHELL = /bin/sh
 SUBDIRS =
 
 srcdir = .
-top_srcdir = ../..
+top_srcdir = ..
 subdir = bubble
 
 default: all-here

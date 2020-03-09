@@ -1,0 +1,13 @@
+*.cfg
+*.pdb
+.deps
+.compile_*
+*.o
+*.a
+*.acc
+*.app
+*.prg
+*.gtp
+*.tos
+*.ttp
+*.exe

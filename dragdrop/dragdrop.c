@@ -37,18 +37,18 @@
 #include <gem.h>
 #include "dragdrop.h"
 
-/*----------------------------------------------------------------------------------------*/ 
-/* Drag & Drop - Pipe ffnen (fuer den Sender)															*/
+/*----------------------------------------------------------------------------------------*/
+/* Drag & Drop - Pipe oeffnen (fuer den Sender)															*/
 /* Funktionsresultat:	Handle der Pipe, -1 fuer Fehler oder -2 fuer Fehler bei appl_write	*/
 /*	app_id:					ID des Senders (der eigenen Applikation)									*/
 /*	rcvr_id:					ID des Empfaengers																	*/
-/*	window:					Handle des Empaefnger-Fensters													*/
+/*	window:					Handle des Empfaenger-Fensters													*/
 /*	mx:						x-Koordinate der Maus beim Loslassen oder -1								*/
 /*	my:						y-Koordinate der Maus beim Loslassen oder -1								*/
 /*	kbstate:					Status der Kontrolltasten														*/
 /*	format:					Feld fuer die max. 8 vom Empfaenger unterstuetzten Formate				*/
 /*	oldpipesig:				Zeiger auf den alten Signal-Dispatcher										*/
-/*----------------------------------------------------------------------------------------*/ 
+/*----------------------------------------------------------------------------------------*/
 short
 ddcreate( short	app_id, short rcvr_id, short window, short mx, short my, short kbstate, unsigned long format[8], void **oldpipesig )
 {
@@ -57,26 +57,26 @@ ddcreate( short	app_id, short rcvr_id, short window, short mx, short my, short k
 	long	handle_mask;
 	short	handle, i;
 
-	strcpy( pipe, "u:\\pipe\\dragdrop.aa" );
-	pipe[18] = 'a' - 1;
+	strcpy( pipe, "U:\\PIPE\\DRAGDROP.AA" );
+	pipe[18] = 'A' - 1;
 	do
 	{
 		pipe[18]++;					/* letzten Buchstaben weitersetzen */
-		if ( pipe[18] > 'z' )				/* kein Buchstabe des Alphabets? */
+		if ( pipe[18] > 'Z' )		/* kein Buchstabe des Alphabets? */
 		{
 			pipe[17]++;				/* ersten Buchstaben der Extension aendern */
-			if ( pipe[17] > 'z' )			/* liess sich keine Pipe oeffnen? */
+			if ( pipe[17] > 'Z' )	/* liess sich keine Pipe oeffnen? */
 				return( -1 );
 		}
 
-		handle = (short) Fcreate( pipe, 0x02 );		/* Pipe anlegen, 0x02 bedeutet, da EOF zurueckgeliefert wird, */
+		handle = (short) Fcreate( pipe, 0x02 );		/* Pipe anlegen, 0x02 bedeutet, dass EOF zurueckgeliefert wird, */
 								/* wenn die Pipe von niemanden zum Lesen geoeffnet wurde */
 	} while ( handle == EACCES );
 
 	if ( handle < 0 )					/* liess sich die Pipe nicht anlegen? */
 		return( handle );
 
-	mbuf[0] = AP_DRAGDROP;					/* Drap&Drop-Message senden */
+	mbuf[0] = AP_DRAGDROP;				/* Drap&Drop-Message senden */
 	mbuf[1] = app_id;					/* ID der eigenen Applikation */
 	mbuf[2] = 0;
 	mbuf[3] = window;					/* Handle des Fensters */
@@ -116,17 +116,17 @@ ddcreate( short	app_id, short rcvr_id, short window, short mx, short my, short k
 }
 
 
-/*----------------------------------------------------------------------------------------*/ 
-/* Drag & Drop - berprfen ob der Empfaenger ein Format akzeptiert								*/
-/* Funktionsresultat:	DD_OK: Empfnger unterstuetzt das Format										*/
+/*----------------------------------------------------------------------------------------*/
+/* Drag & Drop - ueberpruefen ob der Empfaenger ein Format akzeptiert								*/
+/* Funktionsresultat:	DD_OK: Empfaenger unterstuetzt das Format										*/
 /*								DD_EXT: Empfaenger akzeptiert das Format nicht							*/
 /*								DD_LEN: Daten sind zu lang fuer den Empfaenger								*/
 /*								DD_NAK: Fehler bei Kommunikation												*/								
 /*	handle:					Handle der Pipe																	*/
-/*	format:					Kruezel fuer das Format															*/
+/*	format:					Kuerzel fuer das Format															*/
 /*	name:						Beschreibung des Formats als C-String										*/
 /*	size:						Laenge der zu sendenen Daten													*/
-/*----------------------------------------------------------------------------------------*/ 
+/*----------------------------------------------------------------------------------------*/
 short
 ddstry( short handle, unsigned long format, char *name, long size )
 {
@@ -140,7 +140,7 @@ ddstry( short handle, unsigned long format, char *name, long size )
 	{
 		long	written;
 		
-		written = Fwrite( handle, 4, &format );			/* Formatkruezel */
+		written = Fwrite( handle, 4, &format );			/* Formatkuerzel */
 		written += Fwrite( handle, 4, &size );			/* Laenge der zu sendenden Daten */
 		written += Fwrite( handle, str_len, name );		/* Beschreibung des Formats als C-String */
 
@@ -155,25 +155,24 @@ ddstry( short handle, unsigned long format, char *name, long size )
 	return( DD_NAK );
 }
 
-/*----------------------------------------------------------------------------------------*/ 
+/*----------------------------------------------------------------------------------------*/
 /* Drag & Drop - Pipe schliessen																				*/
 /*	handle:					Handle der Pipe																	*/
 /* oldpipesig:				Zeiger auf den alten Signalhandler											*/
-/*----------------------------------------------------------------------------------------*/ 
-void
-ddclose( short handle, void *oldpipesig )
+/*----------------------------------------------------------------------------------------*/
+void ddclose( short handle, void *oldpipesig )
 {
-	Psignal( SIGPIPE, oldpipesig );					/* wieder alten Dispatcher eintragen */
+	Psignal( SIGPIPE, oldpipesig );			/* wieder alten Dispatcher eintragen */
 	Fclose( handle );						/* Pipe schliessen */
 }
 
-/*----------------------------------------------------------------------------------------*/ 
-/* Drag & Drop - Pipe oeffnen (fuer den Empfnger)														*/
+/*----------------------------------------------------------------------------------------*/
+/* Drag & Drop - Pipe oeffnen (fuer den Empfaenger)														*/
 /* Funktionsresultat:	Handle der Pipe oder -1 (Fehler)												*/
 /* pipe:						Zeiger auf den Namen der Pipe ("DRAGDROP.??")							*/
 /* format:					Zeiger auf Array mit unterstuetzten Datenformaten						*/
 /* oldpipesig:				Zeiger auf den Zeiger auf den alten Signalhandler						*/
-/*----------------------------------------------------------------------------------------*/ 
+/*----------------------------------------------------------------------------------------*/
 short
 ddopen( char *pipe, unsigned long format[8], void **oldpipesig )
 {
@@ -198,14 +197,14 @@ ddopen( char *pipe, unsigned long format[8], void **oldpipesig )
 	return( -1 );
 }
 
-/*----------------------------------------------------------------------------------------*/ 
+/*----------------------------------------------------------------------------------------*/
 /* Header fuer Drag & Drop einlesen																			*/
 /* Funktionsresultat:	0 Fehler 1: alles in Ordnung													*/
 /*	handle:					Handle der Pipe																	*/
 /* name:						Zeiger auf Array fuer den Datennamen											*/
 /* format:					Zeiger auf ein Long, das das Datenformat anzeigt						*/
 /* size:						Zeiger auf ein Long fuer die Laenge der Daten								*/
-/*----------------------------------------------------------------------------------------*/ 
+/*----------------------------------------------------------------------------------------*/
 short
 ddrtry( short handle, char *name, unsigned long *format, long *size )
 {
@@ -219,7 +218,7 @@ ddrtry( short handle, char *name, unsigned long *format, long *size )
 			{
 				if ( Fread( handle, 4, size ) == 4 )		/* Laenge der Daten in Bytes auslesen */
 				{	
-					short	name_len;
+					short name_len;
 					
 					name_len = hdr_len -= 8;		/* Laenge des Namens inklusive Nullbyte */
 
@@ -250,12 +249,12 @@ ddrtry( short handle, char *name, unsigned long *format, long *size )
 	return( 0 );															/* Fehler */
 }
 
-/*----------------------------------------------------------------------------------------*/ 
+/*----------------------------------------------------------------------------------------*/
 /* Meldung an den Drag & Drop - Initiator senden														*/
 /* Funktionsresultat:	0: Fehler 1: alles in Ordnung													*/
 /*	handle:					Handle der Pipe																	*/
 /* msg:						Nachrichtennummer																	*/
-/*----------------------------------------------------------------------------------------*/ 
+/*----------------------------------------------------------------------------------------*/
 short
 ddreply( short handle, short msg )
 {

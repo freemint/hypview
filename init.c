@@ -34,6 +34,9 @@
 #include <gem.h>
 #include "diallib.h"
 #include "defs.h"
+#ifndef STDERR_FILENO
+#define STDERR_FILENO 2
+#endif
 
 
 char bootDrive=-1;

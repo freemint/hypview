@@ -34,6 +34,9 @@
 #include <gemx.h>
 #include "include/scancode.h"
 #include "diallib.h"
+#ifndef STDERR_FILENO
+#define STDERR_FILENO 2
+#endif
 
 void ConvertKeypress(short *key,short *kstate);
 void CopyMaximumChars(OBJECT *obj,char *str);

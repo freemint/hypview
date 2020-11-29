@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.org/freemint/hypview.svg?branch=master)](https://travis-ci.org/freemint/hypview) [ ![Download](https://api.bintray.com/packages/freemint/freemint/hypview/images/download.svg) ](https://bintray.com/freemint/freemint/hypview/_latestVersion)
+[![Build Status](https://travis-ci.org/freemint/hypview.svg?branch=master)](https://travis-ci.org/freemint/hypview) [ ![Download](https://api.bintray.com/packages/freemint/app/hypview/images/download.svg) ](https://bintray.com/freemint/app/hypview/_latestVersion)

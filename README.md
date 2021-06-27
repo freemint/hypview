@@ -1,1 +1,3 @@
-[![Build Status](https://travis-ci.org/freemint/hypview.svg?branch=master)](https://travis-ci.org/freemint/hypview) [ ![Download](https://api.bintray.com/packages/freemint/app/hypview/images/download.svg) ](https://bintray.com/freemint/app/hypview/_latestVersion)
+[![Build Status](https://github.com/freemint/hypview/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/freemint/hypview/actions) 
+
+Latest snapshot: [Download](https://tho-otto.de/snapshots/hypview/)

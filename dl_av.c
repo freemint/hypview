@@ -116,6 +116,14 @@ void DoAV_PROTOKOLL(short flags)
 				
 				strcpy(av_name, PROGRAM_UNAME);
 			}
+			else
+			{
+				/* av_name already allocated, server_cfg may be
+				 * set or not set (in case we're still waiting
+				 * for the reply VA_PROTOSTATUS).
+				 * Don't send another AV_PROTOKOLL */
+				return;
+			}
 
 #if DEBUG==ON
 			Debug("ID: %d",server_id);
